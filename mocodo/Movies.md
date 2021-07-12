@@ -1,0 +1,7 @@
+**USER** (<ins>email</ins>, username)  
+**Reviews** (<ins>_email_</ins>, <ins>_ISAN_</ins>, comment, rating)  
+**Belongs to** (<ins>_ISAN_</ins>, <ins>_genre code_</ins>)  
+**MOVIE** (<ins>ISAN</ins>, title, release date)  
+**GENRE** (<ins>genre code</ins>, name)  
+**Plays** (<ins>_actor code_</ins>, <ins>_ISAN_</ins>, role)  
+**ACTOR** (<ins>actor code</ins>, firstname, lastname)
