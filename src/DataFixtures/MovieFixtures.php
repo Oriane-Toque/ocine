@@ -15,7 +15,7 @@ class MovieFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Faker\Factory::create();
 
-				for($nbMovie = 1; $nbMovie < 100; $nbMovie++) {
+				for($nbMovie = 1; $nbMovie <= 100; $nbMovie++) {
 
 					// récupération des références dont on a besoin
 					$genre = $this->getReference("genre_".$faker->numberBetween(1, 12));
