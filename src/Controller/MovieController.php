@@ -60,14 +60,14 @@ class MovieController extends AbstractController
 	 *
 	 * @Route("/movie/{id<\d+>}", name="movie_read")
 	 */
-	public function read($id, Movie $movie = null, CastingRepository $castingRepository)
+	public function read(Movie $movie = null, CastingRepository $castingRepository)
 	{
 		if($movie === null) {
 			throw $this->createNotFoundException("404");
 		}
 
 		$castings = $castingRepository->findBy(
-			["movie" => $id],
+			["movie" => $movie],
 			["creditOrder" => "ASC"],
 		);
 
