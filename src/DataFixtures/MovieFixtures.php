@@ -25,7 +25,7 @@ class MovieFixtures extends Fixture
 					$manager->persist($movie);
 
 					// on enregistre le film dans une référence
-					$this->addReference("movie_" . $nbMovie, $movie);
+					$this->addReference("movie_".$nbMovie, $movie);
 				}
 
         $manager->flush();
