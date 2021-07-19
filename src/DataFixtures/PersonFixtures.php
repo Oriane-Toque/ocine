@@ -22,7 +22,7 @@ class PersonFixtures extends Fixture
 					$manager->persist($person);
 
 					// on enregistre la personne dans une référence
-					$this->addReference("person_" . $nbPerson, $person);
+					$this->addReference("person_".$nbPerson, $person);
 				}
 
         $manager->flush();
