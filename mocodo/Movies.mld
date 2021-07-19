@@ -1,0 +1,22 @@
+%%mocodo
+:
+USER: email, username
+:
+Reviews: #email->USER->email, _#ISAN->MOVIE->ISAN, comment, rating
+:::
+
+
+:
+Belongs to: #ISAN->MOVIE->ISAN, _#genre code->GENRE->genre code
+:
+MOVIE: ISAN, title, release date
+:::
+
+
+:
+GENRE: genre code, name
+:
+Plays: #actor code->ACTOR->actor code, _#ISAN->MOVIE->ISAN, role
+:
+ACTOR: actor code, firstname, lastname
+:
