@@ -55,6 +55,8 @@ class GenreFixtures extends Fixture
 					$genre = new Genre();
 					$genre->setName($genreData['name']);
 					$manager->persist($genre);
+					// on enregistre le genre dans une référence
+					$this->addReference("genre_".$key, $genre);
 				}
 
         $manager->flush();
