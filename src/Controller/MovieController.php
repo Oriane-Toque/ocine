@@ -21,7 +21,7 @@ class MovieController extends AbstractController
 	public function list(MovieRepository $movieRepository)
 	{
 
-		$movies = $movieRepository->findBy(
+		$movies = $movieRepository->findAllByTitle(
 			[],
 			[
 				"releaseDate" => "DESC",
