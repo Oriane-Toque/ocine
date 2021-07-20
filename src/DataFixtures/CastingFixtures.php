@@ -14,7 +14,7 @@ class CastingFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Faker\Factory::create("fr_FR");
 
-				for($nbCasting = 1; $nbCasting <= 50; $nbCasting++) {
+				for($nbCasting = 1; $nbCasting <= 250; $nbCasting++) {
 
 					// récupération des références dont on a besoin
 					$person = $this->getReference("person_".$faker->numberBetween(1, 50));
