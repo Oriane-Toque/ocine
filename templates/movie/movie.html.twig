@@ -22,7 +22,7 @@
 			<p><u>Casting</u> : </p>
 			<ul>
 				{% for casting in castings %}
-					<li>{{ casting.person }} : {{ casting.role }}</li>
+					<li>({{ casting.creditOrder }}) {{ casting.person }} : {{ casting.role }}</li>
 				{% else %}
 					<li>Non informé</li>
 				{% endfor %}
