@@ -50,10 +50,7 @@ class MovieController extends AbstractController
 			throw $this->createNotFoundException("404");
 		}
 
-		$castings = $castingRepository->findBy(
-			["movie" => $movie],
-			["creditOrder" => "ASC"],
-		);
+		$castings = $castingRepository->findAllByMovieOrderCreditQb($movie);
 
 		dump($movie);
 		dump($castings);
