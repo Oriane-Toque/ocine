@@ -59,6 +59,35 @@ class MovieRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+		/**
+		 * Recherche des films et les renvois par ordre alphabétique
+		 * Avec QueryBuilder
+		 *
+		 * @param string $title
+		 * @param string $keywords
+		 * @return Movie[]
+		 */
+		public function searchMovieByTitleAsc($title, $keywords = null): array
+    {
+				// on crée un objet de type Query Builder, sur l'entité Movie
+				// 'm' = alias pour l'entité Movie
+       return $this->createQueryBuilder('m')
+			 			/* renvoie tous les films à partir de la première lettre du titre */
+						->where('m.title > :title')
+						->setParameter('title', $title)
+						/* dans le cas ou m.title strictement égal au titre renseigné */
+						// ->orWhere('m.title = :title')
+						// ->setParameter('title', $title)
+						/* dans le cas ou il y a keywords renseignés renvois les films qui s'y referrent  */
+						->orWhere("MATCH_AGAINST(m.title) AGAINST(:keywords boolean)>0")
+						->setParameter('keywords', $keywords)
+						->orderBy('m.title', 'ASC')
+
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     /*
     public function findByExampleField($value)
     {

@@ -13,6 +13,7 @@ use \DateTime;
  * Classe qui représente la table movie et ses enregistrements
  * 
  * @ORM\Entity(repositoryClass="App\Repository\MovieRepository")
+ * @ORM\Table(name="movie", indexes={@ORM\Index(columns={"title"}, flags={"fulltext"})})
  */
 class Movie
 {
