@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 
 {% block title %}
-	{{ title }} - MovieDb
+	{{ title }} - O'Ciné
 {% endblock %}
 
 {% block menuMovie %}active{% endblock %}
@@ -27,6 +27,7 @@
 					<li>Non informé</li>
 				{% endfor %}
 			</ul>
+			<a href="{{ path("movie_list") }}" class="btn btn-primary">Back Home</a>
 		</div>
 	</div>
 {% endblock %}

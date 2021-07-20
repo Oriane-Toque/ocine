@@ -12,6 +12,62 @@ use DateTime;
 
 class MovieController extends AbstractController
 {
+
+	/**
+	 * Liste Movies
+	 *
+	 * @Route("/", name="movie_list")
+	 */
+	public function list(MovieRepository $movieRepository)
+	{
+
+		$movies = $movieRepository->findBy(
+			[],
+			[
+				"releaseDate" => "DESC",
+			]
+		);
+
+		dump($movies);
+
+		return $this->render(
+			"home/movies.html.twig",
+			[
+				"title" => "Liste des films",
+				"movies" => $movies,
+			]
+		);
+	}
+
+	/**
+	 * Read Movie
+	 *
+	 * @Route("/movie/{id<\d+>}", name="movie_read")
+	 */
+	public function read(Movie $movie = null, CastingRepository $castingRepository)
+	{
+		if ($movie === null) {
+			throw $this->createNotFoundException("404");
+		}
+
+		$castings = $castingRepository->findBy(
+			["movie" => $movie],
+			["creditOrder" => "ASC"],
+		);
+
+		dump($movie);
+		dump($castings);
+
+		return $this->render(
+			"movie/movie.html.twig",
+			[
+				"title" => $movie->getTitle(),
+				"movie" => $movie,
+				"castings" => $castings,
+			]
+		);
+	}
+
 	/**
 	 * Test creation entité
 	 * 
@@ -33,54 +89,6 @@ class MovieController extends AbstractController
 		$entityManager->flush();
 
 		return new Response('<body>Film ajouté : ' . $movie->getId() . '</body>');
-	}
-
-	/**
-	 * Browse Movie
-	 *
-	 * @Route("/", name="movie_browse")
-	 */
-	public function browse(MovieRepository $movieRepository)
-	{
-
-		$movies = $movieRepository->findAll();
-
-		dump($movies);
-
-		return $this->render("home/movies.html.twig",
-			[
-				"title" => "Liste des films",
-				"movies" => $movies,
-			]
-		);
-	}
-
-	/**
-	 * Read Movie
-	 *
-	 * @Route("/movie/{id<\d+>}", name="movie_read")
-	 */
-	public function read(Movie $movie = null, CastingRepository $castingRepository)
-	{
-		if($movie === null) {
-			throw $this->createNotFoundException("404");
-		}
-
-		$castings = $castingRepository->findBy(
-			["movie" => $movie],
-			["creditOrder" => "ASC"],
-		);
-
-		dump($movie);
-		dump($castings);
-
-		return $this->render("movie/movie.html.twig",
-			[
-				"title" => $movie->getTitle(),
-				"movie" => $movie,
-				"castings" => $castings,
-			]
-		);
 	}
 
 	/**
