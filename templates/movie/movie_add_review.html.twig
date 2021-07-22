@@ -1,0 +1,15 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	{{ title }} - O'Ciné
+{% endblock %}
+
+{% block body %}
+
+<h1>Ajouter une critique sur...</h1>
+
+<h2>{{ movie.title }}</h2>
+
+{{ include('movie/_form_add_review.html.twig') }}
+
+{% endblock %}

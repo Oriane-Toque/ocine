@@ -28,6 +28,8 @@
 				{% endfor %}
 			</ul>
 			<a href="{{ path("movie_list") }}" class="btn btn-primary">Back Home</a>
+			<h2>Les critiques</h2>
+			<a href="{{ path("add_review", {"id": movie.id}) }}" class="btn btn-primary">Ajouter une critique au film</a>
 		</div>
 	</div>
 {% endblock %}
