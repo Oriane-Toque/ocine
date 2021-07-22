@@ -2,61 +2,28 @@
 
 namespace App\DataFixtures;
 
+use App\DataFixtures\Provider\MovieDbProvider;
 use App\Entity\Genre;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Faker;
 
 class GenreFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
 
-				$genres = [
-					1 => [
-						"name" => "Action",
-					],
-					2 => [
-						"name" => "Comedy",
-					],
-					3 => [
-						"name" => "Drama",
-					],
-					4 => [
-						"name" => "Fantasy",
-					],
-					5 => [
-						"name" => "Horror",
-					],
-					6 => [
-						"name" => "Mystery",
-					],
-					7 => [
-						"name" => "Romance",
-					],
-					8 => [
-						"name" => "Thriller",
-					],
-					9 => [
-						"name" => "Western",
-					],
-					10 => [
-						"name" => "Psychological",
-					],
-					11 => [
-						"name" => "Crime",
-					],
-					12 => [
-						"name" => "Apocalypse",
-					],
-				];
+				$faker = Faker\Factory::create("fr_FR");
 
-				foreach($genres as $key => $genreData) {
+				$faker->addProvider(new MovieDbProvider);
+
+				for($nbGenre = 1; $nbGenre < 50; $nbGenre++) {
 
 					$genre = new Genre();
-					$genre->setName($genreData['name']);
+					$genre->setName($faker->unique()->movieGenre());
 					$manager->persist($genre);
 					// on enregistre le genre dans une référence
-					$this->addReference("genre_".$key, $genre);
+					$this->addReference("genre_".$nbGenre, $genre);
 				}
 
         $manager->flush();

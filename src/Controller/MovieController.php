@@ -6,9 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Movie;
+use App\Entity\Review;
+use App\Form\ReviewType;
 use App\Repository\CastingRepository;
 use App\Repository\MovieRepository;
 use DateTime;
+use Symfony\Component\HttpFoundation\Request;
 
 class MovieController extends AbstractController
 {
@@ -61,6 +64,50 @@ class MovieController extends AbstractController
 				"title" => $movie->getTitle(),
 				"movie" => $movie,
 				"castings" => $castings,
+			]
+		);
+	}
+
+	/**
+	 * @Route("/movie/{id<\d+>}/review/add", name="add_review")
+	 */
+	public function addReview(int $id, Movie $movie, Request $request) {
+
+		// Film non trouvé
+		if($movie === null) {
+			throw $this->createNotFoundException("Film non trouvé");
+		}
+
+		// Nouvelle critique
+		$review = new Review();
+
+		// création d'un nouveau formulaire
+		$form = $this->createForm(ReviewType::class, $review);
+
+				// on effectue le traitement du formulaire
+				$form->handleRequest($request);
+
+				// dd($review);
+		
+				// on vérifie que le formulaire a été soumis et s'il est valide
+				if ($form->isSubmitted() && $form->isValid()) {
+
+					// Relation review <> movie
+					$review->setMovie($movie);
+		
+					$reviewManager = $this->getDoctrine()->getManager();
+					$reviewManager->persist($review);
+					$reviewManager->flush();
+		
+					return $this->redirectToRoute("movie_read", ["id" => $id]);
+				}
+
+		// Affiche le formulaire
+		return $this->render("movie/movie_add_review.html.twig",
+			[
+				"title" => "Ajout critique",
+				"form" => $form->createView(),
+				"movie" => $movie,
 			]
 		);
 	}
