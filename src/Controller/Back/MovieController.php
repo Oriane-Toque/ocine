@@ -30,7 +30,7 @@ class MovieController extends AbstractController
     /**
      * Afficher un film
      *
-     * @Route("/back/movie/read/{id}", name="back_movie_read", methods={"GET"})
+     * @Route("/back/movie/read/{id<\d+>}", name="back_movie_read", methods={"GET"})
      */
     public function read(Movie $movie = null): Response
     {
@@ -75,7 +75,7 @@ class MovieController extends AbstractController
     /**
      * Editer un film
      * 
-     * @Route("/back/movie/edit/{id}", name="back_movie_edit", methods={"GET","POST"})
+     * @Route("/back/movie/edit/{id<\d+>}", name="back_movie_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Movie $movie): Response
     {
@@ -119,6 +119,6 @@ class MovieController extends AbstractController
 			$entityManager->remove($movie);
 			$entityManager->flush();
 
-			return $this->redirectToRoute("back_movie_list");
+			return $this->redirectToRoute("back_movie_browse");
     }
 }
