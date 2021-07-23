@@ -5,6 +5,7 @@ namespace App\Controller\Back;
 use App\Entity\Movie;
 use App\Repository\MovieRepository;
 use App\Form\MovieType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -76,8 +77,30 @@ class MovieController extends AbstractController
      * 
      * @Route("/back/movie/edit/{id}", name="back_movie_edit", methods={"GET","POST"})
      */
-    public function edit(): Response
+    public function edit(Request $request, Movie $movie): Response
     {
+        // 404 ?
+        if ($movie === null) {
+            throw $this->createNotFoundException('Film non trouvé.');
+        }
+
+        $form = $this->createForm(MovieType::class, $movie);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+            // Pas de persist() pour 
+            $em->flush();
+
+            return $this->redirectToRoute('back_movie_read', ['id' => $movie->getId()]);
+        }
+
+        // Affiche le form
+        return $this->render('back/movie/edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
@@ -86,7 +109,16 @@ class MovieController extends AbstractController
      * 
      * @Route("/back/movie/delete/{id<\d+>}", name="back_movie_delete", methods={"GET"})
      */
-    public function delete(): Response
+    public function delete(Movie $movie = null, EntityManagerInterface $entityManager): Response
     {
+			// 404 ?
+			if($movie === null) {
+				throw $this->createNotFoundException("Ce film n'existe pas");
+			}
+
+			$entityManager->remove($movie);
+			$entityManager->flush();
+
+			return $this->redirectToRoute("back_movie_list");
     }
 }

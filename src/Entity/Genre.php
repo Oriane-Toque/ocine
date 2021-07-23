@@ -6,6 +6,7 @@ use App\Repository\GenreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=GenreRepository::class)
@@ -39,7 +40,7 @@ class Genre
 	 *
 	 * @return string
 	 */
-/* 	public function __toString(): string
+	/* 	public function __toString(): string
 	{
 		return $this->name;
 	} */
