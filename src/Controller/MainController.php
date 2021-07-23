@@ -13,7 +13,7 @@ use App\Repository\MovieRepository;
 use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 
-class MovieController extends AbstractController
+class MainController extends AbstractController
 {
 
 	/**
