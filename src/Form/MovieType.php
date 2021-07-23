@@ -23,6 +23,7 @@ class MovieType extends AbstractType
 							[
 								'class' => Genre::class,
 								// option pour écrire une requête custom afin d'afficher les genres par ordre alphabétique
+								// ou écrire requete dans repository puis return $genreRepository->findGenreByAsc() par exemple
 								'query_builder' => function (GenreRepository $genreRepository) {
 									return $genreRepository->createQueryBuilder('g')
 																				 ->orderBy('g.name', 'ASC');
