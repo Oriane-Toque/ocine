@@ -19,7 +19,7 @@ class MovieController extends AbstractController
      */
     public function browse(MovieRepository $movieRepository): Response
     {
-        $movies = $movieRepository->findAllOrderedByTitleAscQb();
+        $movies = $movieRepository->findByTitleAsc();
 
         return $this->render('back/movie/browse.html.twig', [
             'movies' => $movies,
