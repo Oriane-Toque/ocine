@@ -4,8 +4,10 @@ namespace App\Controller\Back;
 
 use App\Entity\Movie;
 use App\Repository\MovieRepository;
+use App\Form\MovieType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MovieController extends AbstractController
@@ -46,8 +48,27 @@ class MovieController extends AbstractController
      *
      * @Route("/back/movie/add", name="back_movie_add", methods={"GET", "POST"})
      */
-    public function add(): Response
+    public function add(Request $request): Response
     {
+        $movie = new Movie();
+
+        $form = $this->createForm(MovieType::class, $movie);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($movie);
+            $em->flush();
+
+            return $this->redirectToRoute('back_movie_read', ['id' => $movie->getId()]);
+        }
+
+        // Affiche le form
+        return $this->render('back/movie/add.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
