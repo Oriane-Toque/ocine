@@ -28,8 +28,26 @@
 				{% endfor %}
 			</ul>
 			<a href="{{ path("movie_list") }}" class="btn btn-primary">Back Home</a>
-			<h2>Les critiques</h2>
-			<a href="{{ path("add_review", {"id": movie.id}) }}" class="btn btn-primary">Ajouter une critique au film</a>
 		</div>
+		<h2>Les critiques</h2>
+		<p><a href="{{ path("add_review", {"id": movie.id}) }}" class="btn btn-primary">Ajouter une critique au film</a></p>
+			{% for review in movie.reviews %}
+				<div class="card mb-2">
+						<div class="card-body">
+								<h5 class="card-title">{{ review.username }}</h5>
+								<h6 class="card-subtitle mb-2 text-muted">Note :
+										{{ review.rating }}
+										sur 5</h6>
+								<h6 class="card-subtitle mb-2 text-muted">Vu le :
+										{{ (review.watchedAt|date('d/m/Y')) }}</h6>
+								<p class="card-text">{{ review.content }}</p>
+								<div class="my-2">
+										{% for reaction in review.reactions %}
+										<span class="badge bg-{{ reaction }}">{{ reaction }}</span>
+										{% endfor %}
+								</div>
+						</div>
+				</div>
+			{% endfor %}
 	</div>
 {% endblock %}
