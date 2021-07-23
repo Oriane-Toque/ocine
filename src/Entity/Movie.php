@@ -41,7 +41,7 @@ class Movie
 	private $releaseDate;
 
 	/**
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="smallint")
 	 */
 	private $duration;
 
@@ -67,25 +67,31 @@ class Movie
 	 */
 	private $castings;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Review::class, mappedBy="movie", orphanRemoval=true)
-     */
-    private $reviews;
+	/**
+	 * @ORM\OneToMany(targetEntity=Review::class, mappedBy="movie", orphanRemoval=true)
+	 */
+	private $reviews;
+
+	/**
+	 * @ORM\Column(type="smallint", nullable=true)
+	 */
+	private $rating;
 
 	public function __construct()
-               	{
-               		$this->genres = new ArrayCollection();
-               		$this->castings = new ArrayCollection();
-                 $this->reviews = new ArrayCollection();
-               	}
+	{
+		$this->genres = new ArrayCollection();
+		$this->castings = new ArrayCollection();
+		$this->reviews = new ArrayCollection();
+		$this->teams = new ArrayCollection();
+	}
 
 	/**
 	 * Get titre
 	 */
 	public function getTitle()
-               	{
-               		return $this->title;
-               	}
+	{
+		return $this->title;
+	}
 
 	/**
 	 * Set titre
@@ -94,28 +100,28 @@ class Movie
 	 * @return  self
 	 */
 	public function setTitle(string $title)
-               	{
-               		$this->title = $title;
-               
-               		return $this;
-               	}
+	{
+		$this->title = $title;
+
+		return $this;
+	}
 
 	/**
 	 * Get clé primaire
 	 */
 	public function getId()
-               	{
-               		return $this->id;
-               	}
+	{
+		return $this->id;
+	}
 
 
 	/**
 	 * Get the value of createdAt
 	 */
 	public function getCreatedAt()
-               	{
-               		return $this->createdAt;
-               	}
+	{
+		return $this->createdAt;
+	}
 
 	/**
 	 * Set the value of createdAt
@@ -123,19 +129,19 @@ class Movie
 	 * @return  self
 	 */
 	public function setCreatedAt(DateTime $createdAt)
-               	{
-               		$this->createdAt = $createdAt;
-               
-               		return $this;
-               	}
+	{
+		$this->createdAt = $createdAt;
+
+		return $this;
+	}
 
 	/**
 	 * Get the value of updatedAt
 	 */
 	public function getUpdatedAt()
-               	{
-               		return $this->updatedAt;
-               	}
+	{
+		return $this->updatedAt;
+	}
 
 	/**
 	 * Set the value of updatedAt
@@ -143,117 +149,129 @@ class Movie
 	 * @return  self
 	 */
 	public function setUpdatedAt(DateTime $updatedAt)
-               	{
-               		$this->updatedAt = $updatedAt;
-               
-               		return $this;
-               	}
+	{
+		$this->updatedAt = $updatedAt;
+
+		return $this;
+	}
 
 	/**
 	 * @return Collection|Genre[]
 	 */
 	public function getGenres(): Collection
-               	{
-               		return $this->genres;
-               	}
+	{
+		return $this->genres;
+	}
 
 	public function addGenre(Genre $genre): self
-               	{
-               		if (!$this->genres->contains($genre)) {
-               			$this->genres[] = $genre;
-               		}
-               
-               		return $this;
-               	}
+	{
+		if (!$this->genres->contains($genre)) {
+			$this->genres[] = $genre;
+		}
+
+		return $this;
+	}
 
 	public function removeGenre(Genre $genre): self
-               	{
-               		$this->genres->removeElement($genre);
-               
-               		return $this;
-               	}
+	{
+		$this->genres->removeElement($genre);
+
+		return $this;
+	}
 
 	/**
 	 * @return Collection|Casting[]
 	 */
 	public function getCastings(): Collection
-               	{
-               		return $this->castings;
-               	}
+	{
+		return $this->castings;
+	}
 
 	public function addCasting(Casting $casting): self
-               	{
-               		if (!$this->castings->contains($casting)) {
-               			$this->castings[] = $casting;
-               			$casting->setMovie($this);
-               		}
-               
-               		return $this;
-               	}
+	{
+		if (!$this->castings->contains($casting)) {
+			$this->castings[] = $casting;
+			$casting->setMovie($this);
+		}
+
+		return $this;
+	}
 
 	public function removeCasting(Casting $casting): self
-               	{
-               		if ($this->castings->removeElement($casting)) {
-               			// set the owning side to null (unless already changed)
-               			if ($casting->getMovie() === $this) {
-               				$casting->setMovie(null);
-               			}
-               		}
-               
-               		return $this;
-               	}
+	{
+		if ($this->castings->removeElement($casting)) {
+			// set the owning side to null (unless already changed)
+			if ($casting->getMovie() === $this) {
+				$casting->setMovie(null);
+			}
+		}
+
+		return $this;
+	}
 
 	public function getReleaseDate(): ?\DateTimeInterface
-               	{
-               		return $this->releaseDate;
-               	}
+	{
+		return $this->releaseDate;
+	}
 
 	public function setReleaseDate(\DateTimeInterface $releaseDate): self
-               	{
-               		$this->releaseDate = $releaseDate;
-               
-               		return $this;
-               	}
+	{
+		$this->releaseDate = $releaseDate;
+
+		return $this;
+	}
 
 	public function getDuration(): ?int
-               	{
-               		return $this->duration;
-               	}
+	{
+		return $this->duration;
+	}
 
 	public function setDuration(int $duration): self
-               	{
-               		$this->duration = $duration;
-               
-               		return $this;
-               	}
+	{
+		$this->duration = $duration;
 
-    /**
-     * @return Collection|Review[]
-     */
-    public function getReviews(): Collection
-    {
-        return $this->reviews;
-    }
+		return $this;
+	}
 
-    public function addReview(Review $review): self
-    {
-        if (!$this->reviews->contains($review)) {
-            $this->reviews[] = $review;
-            $review->setMovie($this);
-        }
+	/**
+	 * @return Collection|Review[]
+	 */
+	public function getReviews(): Collection
+	{
+		return $this->reviews;
+	}
 
-        return $this;
-    }
+	public function addReview(Review $review): self
+	{
+		if (!$this->reviews->contains($review)) {
+			$this->reviews[] = $review;
+			$review->setMovie($this);
+		}
 
-    public function removeReview(Review $review): self
-    {
-        if ($this->reviews->removeElement($review)) {
-            // set the owning side to null (unless already changed)
-            if ($review->getMovie() === $this) {
-                $review->setMovie(null);
-            }
-        }
+		return $this;
+	}
 
-        return $this;
-    }
+	public function removeReview(Review $review): self
+	{
+		if ($this->reviews->removeElement($review)) {
+			// set the owning side to null (unless already changed)
+			if ($review->getMovie() === $this) {
+				$review->setMovie(null);
+			}
+		}
+
+		return $this;
+	}
+
+	public function getRating(): ?int
+	{
+		return $this->rating;
+	}
+
+	public function setRating(?int $rating): self
+	{
+		$this->rating = $rating;
+
+		return $this;
+	}
 }

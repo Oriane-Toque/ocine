@@ -52,7 +52,7 @@ class Review
 	 * @ORM\Column(type="json")
 	 *  
 	 * @Assert\NotBlank
-   * @Assert\Choice({"smile", "cry", "think", "sleep", "dream"}, multiple=true)
+	 * @Assert\Choice({"smile", "cry", "think", "sleep", "dream"}, multiple=true)
 	 */
 	private $reactions = [];
 
@@ -61,98 +61,98 @@ class Review
 	 */
 	private $watchedAt;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Movie::class, inversedBy="reviews")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $movie;
+	/**
+	 * @ORM\ManyToOne(targetEntity=Movie::class, inversedBy="reviews")
+	 * @ORM\JoinColumn(nullable=false)
+	 */
+	private $movie;
 
 	public function getId(): ?int
-                  	{
-                  		return $this->id;
-                  	}
+	{
+		return $this->id;
+	}
 
 	public function getUsername(): ?string
-                  	{
-                  		return $this->username;
-                  	}
+	{
+		return $this->username;
+	}
 
 	public function setUsername(string $username): self
-                  	{
-                  		$this->username = $username;
-                  
-                  		return $this;
-                  	}
+	{
+		$this->username = $username;
+
+		return $this;
+	}
 
 	public function getEmail(): ?string
-                  	{
-                  		return $this->email;
-                  	}
+	{
+		return $this->email;
+	}
 
 	public function setEmail(string $email): self
-                  	{
-                  		$this->email = $email;
-                  
-                  		return $this;
-                  	}
+	{
+		$this->email = $email;
+
+		return $this;
+	}
 
 	public function getContent(): ?string
-                  	{
-                  		return $this->content;
-                  	}
+	{
+		return $this->content;
+	}
 
 	public function setContent(string $content): self
-                  	{
-                  		$this->content = $content;
-                  
-                  		return $this;
-                  	}
+	{
+		$this->content = $content;
+
+		return $this;
+	}
 
 	public function getRating(): ?int
-                  	{
-                  		return $this->rating;
-                  	}
+	{
+		return $this->rating;
+	}
 
 	public function setRating(int $rating): self
-                  	{
-                  		$this->rating = $rating;
-                  
-                  		return $this;
-                  	}
+	{
+		$this->rating = $rating;
+
+		return $this;
+	}
 
 	public function getReactions(): ?array
-                  	{
-                  		return $this->reactions;
-                  	}
+	{
+		return $this->reactions;
+	}
 
 	public function setReactions(array $reactions): self
-                  	{
-                  		$this->reactions = $reactions;
-                  
-                  		return $this;
-                  	}
+	{
+		$this->reactions = $reactions;
+
+		return $this;
+	}
 
 	public function getWatchedAt(): ?\DateTimeImmutable
-                  	{
-                  		return $this->watchedAt;
-                  	}
+	{
+		return $this->watchedAt;
+	}
 
 	public function setWatchedAt(\DateTimeImmutable $watchedAt): self
-                  	{
-                  		$this->watchedAt = $watchedAt;
-                  
-                  		return $this;
-                  	}
+	{
+		$this->watchedAt = $watchedAt;
 
-    public function getMovie(): ?Movie
-    {
-        return $this->movie;
-    }
+		return $this;
+	}
 
-    public function setMovie(?Movie $movie): self
-    {
-        $this->movie = $movie;
+	public function getMovie(): ?Movie
+	{
+		return $this->movie;
+	}
 
-        return $this;
-    }
+	public function setMovie(?Movie $movie): self
+	{
+		$this->movie = $movie;
+
+		return $this;
+	}
 }
