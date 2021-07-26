@@ -38,14 +38,11 @@
 								<a class="nav-link" href="#">Credit</a>
 							</li>
 						</ul>
-						<form class="d-flex">
-							<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-							<button class="btn btn-outline-success" type="submit">Search</button>
-						</form>
+						<a href="{{ path('app_login') }}" class="btn btn-success">Login</a>
+						{% block back_logout %}{% endblock %}
 					</div>
 				</div>
 			</nav>
-			{% block secondaryNav %}{% endblock %}
 		</header>
 
 		<main>
