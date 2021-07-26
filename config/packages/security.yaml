@@ -43,3 +43,6 @@ security:
         - { path: ^/back, roles: ROLE_ADMIN }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+    
+    role_hierarchy:
+        # Role qui hérite d'un autre role à définir (ancetre: héritier)
