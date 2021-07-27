@@ -40,9 +40,22 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/back, roles: ROLE_ADMIN }
+        # Front : Si user ANONYME : page d'accueil + fiche film seulement
+        # Accès par défaut
+
+        # Front : Si ROLE_USER : ajouter une critique sur un film.
+        - { path: ^/movie/\d+/review/add, roles: ROLE_USER}
+
+        # Admin : add / edit / delete
+        - { path: ^/back/(movie|user)/(add|edit|delete), roles: ROLE_ADMIN }
+
+        # Admin : si ROLE_MANAGER : accès aux pages de listes movies, genres.etc
+        - { path: ^/back/(movie|user)/(browse|read), roles: ROLE_MANAGER }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
     
     role_hierarchy:
-        # Role qui hérite d'un autre role à définir (ancetre: héritier)
+        # Role Admin hérite de role manager
+        ROLE_ADMIN: ROLE_MANAGER
+        # Si on souhaite que les MANAGER et ADMIN comme un USER sur le front
+        ROLE_MANAGER: ROLE_USER

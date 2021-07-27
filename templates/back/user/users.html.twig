@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends "back/base_back.html.twig" %}
 
 {% block title %}{{title}} - O'Ciné{% endblock %}
 
@@ -23,8 +23,8 @@
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
                 <td>{{ user.password }}</td>
                 <td>
-                    <a href="{{ path('user_show', {'id': user.id}) }}" class="btn btn-primary">Détails</a>
-                    <a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-warning">Editer</a>
+                    <a href="{{ path('back_user_read', {'id': user.id}) }}" class="btn btn-primary">Détails</a>
+                    <a href="{{ path('back_user_edit', {'id': user.id}) }}" class="btn btn-warning">Editer</a>
                 </td>
             </tr>
         {% else %}
@@ -35,5 +35,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('user_new') }}" class="btn btn-success">Ajouter un utilisateur</a>
+    <a href="{{ path('back_user_add') }}" class="btn btn-success">Ajouter un utilisateur</a>
 {% endblock %}

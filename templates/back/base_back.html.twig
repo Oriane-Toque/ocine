@@ -1,7 +1,10 @@
 {% extends "base.html.twig" %}
 
-{% block back_logout %}
+{% block subNav %}
 
-<a href="{{ path('app_logout') }}" class="btn btn-danger">Logout</a>
+<nav>
+		<a href="{{ path('back_user_browse') }}">Utilisateurs</a>
+    <a href="{{ path('back_movie_browse') }}">Films</a>
+</nav>
 
 {% endblock %}

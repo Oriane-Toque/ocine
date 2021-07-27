@@ -4,7 +4,7 @@ namespace App\Controller\Back;
 
 use App\Entity\Movie;
 use App\Repository\MovieRepository;
-use App\Form\MovieType;
+use App\Form\Front\MovieType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
