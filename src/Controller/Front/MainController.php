@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Front;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Movie;
 use App\Entity\Review;
-use App\Form\ReviewType;
+use App\Form\Front\ReviewType;
 use App\Repository\CastingRepository;
 use App\Repository\MovieRepository;
 use DateTime;
@@ -34,7 +34,7 @@ class MainController extends AbstractController
 		dump($movies);
 
 		return $this->render(
-			"home/movies.html.twig",
+			"front/home/movies.html.twig",
 			[
 				"title" => "Liste des films",
 				"movies" => $movies,
@@ -59,7 +59,7 @@ class MainController extends AbstractController
 		dump($castings);
 
 		return $this->render(
-			"movie/movie.html.twig",
+			"front/movie/movie.html.twig",
 			[
 				"title" => $movie->getTitle(),
 				"movie" => $movie,
@@ -103,7 +103,7 @@ class MainController extends AbstractController
 				}
 
 		// Affiche le formulaire
-		return $this->render("movie/movie_add_review.html.twig",
+		return $this->render("front/movie/movie_add_review.html.twig",
 			[
 				"title" => "Ajout critique",
 				"form" => $form->createView(),

@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends "back/base_back.html.twig" %}
 
 {% block title %}{{title}} - O'Ciné{% endblock %}
 
@@ -26,9 +26,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('user_list') }}" class="btn btn-primary">Back to list</a>
+    <a href="{{ path('back_user_browse') }}" class="btn btn-primary">Back to list</a>
 
-    <a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-warning">Editer</a>
+    <a href="{{ path('back_user_edit', {'id': user.id}) }}" class="btn btn-warning">Editer</a>
 
-    {{ include('user/_delete_form.html.twig') }}
+    {{ include('back/user/_delete_form.html.twig') }}
 {% endblock %}

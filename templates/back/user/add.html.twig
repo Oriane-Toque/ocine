@@ -1,0 +1,11 @@
+{% extends "back/base_back.html.twig" %}
+
+{% block title %}{{title}} - O'Ciné{% endblock %}
+
+{% block body %}
+    <h1>Ajouter un nouvel utilisateur</h1>
+
+    {{ include('back/user/_form.html.twig') }}
+
+    <a href="{{ path('back_user_browse') }}" class="btn btn-primary">Back to list</a>
+{% endblock %}

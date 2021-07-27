@@ -1,67 +1,75 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Back;
 
 use App\Entity\User;
-use App\Form\UserType;
+use App\Form\Back\UserType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/user")
+ * @Route("/back/user", name="back_user_")
  */
 class UserController extends AbstractController
 {
     /**
-     * @Route("/", name="user_list", methods={"GET"})
+     * @Route("/browse", name="browse", methods={"GET"})
      */
-    public function list(UserRepository $userRepository): Response
+    public function browse(UserRepository $userRepository): Response
     {
-        return $this->render('user/users.html.twig', [
+        return $this->render('back/user/users.html.twig', [
             'users' => $userRepository->findAll(),
 						'title' => 'Users'
         ]);
     }
 
     /**
-     * @Route("/new", name="user_new", methods={"GET","POST"})
+     * @Route("/add", name="add", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function add(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+						// on hash le mdp
+						$hashedPassword = $userPasswordHasher->hashPassword($user, $user->getPassword());
+						// on le remet dans $user->password
+						$user->setPassword($hashedPassword);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('back_user_browse', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('user/new.html.twig', [
+        return $this->renderForm('back/user/add.html.twig', [
             'user' => $user,
             'form' => $form,
+						'title' => 'Add User',
         ]);
     }
 
     /**
-     * @Route("/{id}", name="user_show", methods={"GET"})
+     * @Route("/read/{id<\d+>}", name="read", methods={"GET"})
      */
-    public function show(User $user): Response
+    public function read(User $user): Response
     {
-        return $this->render('user/show.html.twig', [
+        return $this->render('back/user/read.html.twig', [
             'user' => $user,
 						'title' => 'User n°'.$user->getId(),
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
+     * @Route("/edit/{id<\d+>}", name="edit", methods={"GET","POST"})
      */
     public function edit(Request $request, User $user): Response
     {
@@ -71,17 +79,17 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('back_user_browse', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('user/edit.html.twig', [
+        return $this->renderForm('back/user/edit.html.twig', [
             'user' => $user,
             'form' => $form,
         ]);
     }
 
     /**
-     * @Route("/{id}", name="user_delete", methods={"POST"})
+     * @Route("/delete/{id<\d+>}", name="delete", methods={"POST"})
      */
     public function delete(Request $request, User $user): Response
     {
@@ -91,6 +99,6 @@ class UserController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('back_user_browse', [], Response::HTTP_SEE_OTHER);
     }
 }
