@@ -14,7 +14,7 @@
 					<div class="fw-bold">#{{ loop.index }} - {{ movie.title }}</div>
 					Durée : {{ movie.duration }} mins
 				</div>
-				<a href="{{ path("movie_read", {"id": movie.id}) }}" class="btn btn-primary">Détails</a>
+				<a href="{{ path("movie_read", {"slug": movie.slug}) }}" class="btn btn-primary">Détails</a>
 			</li>
 		{% endfor %}
 	</ul>
