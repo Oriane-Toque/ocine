@@ -3,6 +3,7 @@
 {% block title %}Admin du film - {{ movie.title }}{% endblock %}
 
 {% block body %}
+{% include "_flash_messages.html.twig" %}
 <div class="row my-5">
     <div class="col-sm-12 col-md-5">
         <img src="{{ movie.poster }}" alt="{{ movie.title }}" class="img-fluid" />
