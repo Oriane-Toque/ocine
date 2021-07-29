@@ -30,7 +30,7 @@
 			<a href="{{ path("movie_list") }}" class="btn btn-primary">Back Home</a>
 		</div>
 		<h2>Les critiques</h2>
-		<p><a href="{{ path("add_review", {"id": movie.id}) }}" class="btn btn-primary">Ajouter une critique au film</a></p>
+		<p><a href="{{ path("add_review", {"slug": movie.slug}) }}" class="btn btn-primary">Ajouter une critique au film</a></p>
 			{% for review in movie.reviews %}
 				<div class="card mb-2">
 						<div class="card-body">

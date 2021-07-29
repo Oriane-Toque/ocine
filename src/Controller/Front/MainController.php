@@ -45,7 +45,7 @@ class MainController extends AbstractController
 	/**
 	 * Read Movie
 	 *
-	 * @Route("/movie/{id<\d+>}", name="movie_read")
+	 * @Route("/movie/{slug}", name="movie_read")
 	 */
 	public function read(Movie $movie = null, CastingRepository $castingRepository)
 	{
@@ -69,9 +69,9 @@ class MainController extends AbstractController
 	}
 
 	/**
-	 * @Route("/movie/{id<\d+>}/review/add", name="add_review")
+	 * @Route("/movie/{slug}/review/add", name="add_review")
 	 */
-	public function addReview(int $id, Movie $movie, Request $request) {
+	public function addReview(Movie $movie, Request $request) {
 
 		// Film non trouvé
 		if($movie === null) {
@@ -99,7 +99,7 @@ class MainController extends AbstractController
 					$reviewManager->persist($review);
 					$reviewManager->flush();
 		
-					return $this->redirectToRoute("movie_read", ["id" => $id]);
+					return $this->redirectToRoute("movie_read", ["slug" => $movie->getSlug()]);
 				}
 
 		// Affiche le formulaire
