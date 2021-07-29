@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\DataFixtures\Provider\MovieDbProvider;
 use App\Entity\Movie;
+use App\Service\SlugService;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -12,6 +13,13 @@ use Faker;
 
 class MovieFixtures extends Fixture implements DependentFixtureInterface
 {
+		private $slugService;
+
+		public function __construct(SlugService $slugService)
+		{
+			$this->slugService = $slugService;
+		}
+
     public function load(ObjectManager $manager)
     {
         $faker = Faker\Factory::create();
@@ -26,6 +34,7 @@ class MovieFixtures extends Fixture implements DependentFixtureInterface
 					$movie->setCreatedAt(new DateTime());
 					$movie->setReleaseDate($faker->dateTimeBetween('-30 years', 'now'));
 					$movie->setDuration($faker->numberBetween(55, 180));
+					$movie->setSlug($this->slugService->slugConvert($movie->getTitle()));
 
 
 					for($nbGenre = 1; $nbGenre <= mt_rand(1, 4); $nbGenre++) {
