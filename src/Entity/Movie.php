@@ -40,6 +40,13 @@ class Movie
 	private $title;
 
 	/**
+	 * Slug
+	 * 
+	 * @ORM\Column(type="string", length=255)
+	 */
+	private $slug;
+
+	/**
 	 * @ORM\Column(type="datetime")
 	 * 
 	 * @Assert\NotBlank
@@ -303,6 +310,26 @@ class Movie
 	public function setPoster(?string $poster): self
 	{
 		$this->poster = $poster;
+
+		return $this;
+	}
+
+	/**
+	 * Get slug
+	 */ 
+	public function getSlug()
+	{
+		return $this->slug;
+	}
+
+	/**
+	 * Set slug
+	 *
+	 * @return  self
+	 */ 
+	public function setSlug($slug)
+	{
+		$this->slug = $slug;
 
 		return $this;
 	}
