@@ -8,9 +8,12 @@ class SlugService {
 
 	private $slugger;
 
-	public function __construct(SluggerInterface $slugger)
+	private $toLower;
+
+	public function __construct(SluggerInterface $slugger, bool $toLower)
 	{
 		$this->slugger = $slugger;
+		$this->toLower = $toLower;
 	}
 
 	/**
@@ -21,6 +24,10 @@ class SlugService {
 	 */
 	public function slugConvert(string $slugUrl): string {
 
-		return $this->slugger->slug($slugUrl)->lower();
+		if($this->toLower) {
+			return $this->slugger->slug($slugUrl)->lower();
+		} else {
+			return $this->slugger->slug($slugUrl);
+		}
 	}
 }
