@@ -4,6 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+  # variable définis dans le .env afin que chaque machine puisse la surcharger comme il le désire
+  message_generator_is_random: '%env(bool:MESSAGE_GENERATOR_IS_RANDOM)%'
 
 services:
     # default configuration for services in *this* file
@@ -23,3 +25,8 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Service\MessageGenerator:
+      #Arguments à transmettre au constructeur au moment de l'instanciation de notre objet
+        arguments:
+            $isRandom: '%message_generator_is_random%'

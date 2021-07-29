@@ -47,10 +47,10 @@ security:
         - { path: ^/movie/\d+/review/add, roles: ROLE_USER}
 
         # Admin : add / edit / delete
-        - { path: ^/back/(movie|user)/(add|edit|delete), roles: ROLE_ADMIN }
+        - { path: ^/back/[a-z]+/(add|edit|delete), roles: ROLE_ADMIN }
 
         # Admin : si ROLE_MANAGER : accès aux pages de listes movies, genres.etc
-        - { path: ^/back/(movie|user)/(browse|read), roles: ROLE_MANAGER }
+        - { path: ^/back/[a-z]+/(browse|read), roles: ROLE_MANAGER }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
     

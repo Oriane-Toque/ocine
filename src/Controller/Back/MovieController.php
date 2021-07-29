@@ -5,6 +5,7 @@ namespace App\Controller\Back;
 use App\Entity\Movie;
 use App\Repository\MovieRepository;
 use App\Form\Front\MovieType;
+use App\Service\MessageGenerator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -77,7 +78,7 @@ class MovieController extends AbstractController
      * 
      * @Route("/back/movie/edit/{id<\d+>}", name="back_movie_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Movie $movie): Response
+    public function edit(Request $request, Movie $movie, MessageGenerator $messageGenerator): Response
     {
         // 404 ?
         if ($movie === null) {
@@ -93,6 +94,8 @@ class MovieController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             // Pas de persist() pour 
             $em->flush();
+
+						$this->addFlash('success', $messageGenerator->getRandomMessage());
 
             return $this->redirectToRoute('back_movie_read', ['id' => $movie->getId()]);
         }
