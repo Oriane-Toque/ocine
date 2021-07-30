@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+
+body {
+    font-family: 'Ubuntu', sans-serif!important;
+}
+
+#header-nav {
+    background-color: rgb(160, 52, 52)!important;
+}
+
+#logo {
+    font-weight: 700;
+    font-size: 2rem;
+}
+
+.header-nav_content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-nav_content li {
+    font-size: 1.2rem;
+}
+
+.header-nav_content li:hover {
+    text-decoration: underline;
+    color: white;
+}
+
+.btn-login,
+.btn-logout {
+    padding: 0.8rem;
+    border: solid 1px white;
+    border-radius: 0.4rem;
+    background-color: rgb(160, 52, 52);
+    text-decoration: none;
+    color: white;
+    font-weight: 700;
+}
+
+.btn-login:hover,
+.btn-logout:hover {
+    background-color: rgb(175, 93, 121);
+    color: white;
+}
+
+.connect {
+    text-align: right;
+}
+
+.connect-badge {
+    padding: 0.1rem;
+    background-color: palevioletred;
+    border: solid 1px rgb(160, 52, 52);
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.7rem;
+    text-align: center;
+    color: white;
+    font-weight: 700;
+}
