@@ -32,7 +32,7 @@ class Movie
 	/**
 	 * Titre
 	 * 
-	 * @ORM\Column(type="string", length=211)
+	 * @ORM\Column(type="string", length=211, unique=true)
 	 * 
 	 * @Assert\NotBlank
 	 * @Assert\Length(max=211)
@@ -42,7 +42,7 @@ class Movie
 	/**
 	 * Slug
 	 * 
-	 * @ORM\Column(type="string", length=255)
+	 * @ORM\Column(type="string", length=255, unique=true)
 	 */
 	private $slug;
 
