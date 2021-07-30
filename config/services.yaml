@@ -5,8 +5,8 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
   # variable définis dans le .env afin que chaque machine puisse la surcharger comme il le désire
-  message_generator_is_random: '%env(bool:MESSAGE_GENERATOR_IS_RANDOM)%'
-  slug_to_lower: '%env(bool:SLUG_TO_LOWER)%'
+  app.message_generator_is_random: '%env(bool:MESSAGE_GENERATOR_IS_RANDOM)%'
+  app.slug_to_lower: '%env(bool:SLUG_TO_LOWER)%'
 
 services:
     # default configuration for services in *this* file
@@ -30,9 +30,9 @@ services:
     App\Service\MessageGenerator:
       #Arguments à transmettre au constructeur au moment de l'instanciation de notre objet
         arguments:
-            $isRandom: '%message_generator_is_random%'
+            $isRandom: '%app.message_generator_is_random%'
     
     App\Service\SlugService:
         arguments:
-            $toLower: '%slug_to_lower%'
+            $toLower: '%app.slug_to_lower%'
             

@@ -10,10 +10,13 @@ use Doctrine\ORM\Mapping as ORM;
 use \DateTime;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 /**
  * Classe qui représente la table movie et ses enregistrements
  * 
  * @ORM\Entity(repositoryClass="App\Repository\MovieRepository")
+ * @UniqueEntity("title")
  */
 class Movie
 {
@@ -316,7 +319,7 @@ class Movie
 
 	/**
 	 * Get slug
-	 */ 
+	 */
 	public function getSlug()
 	{
 		return $this->slug;
@@ -326,7 +329,7 @@ class Movie
 	 * Set slug
 	 *
 	 * @return  self
-	 */ 
+	 */
 	public function setSlug($slug)
 	{
 		$this->slug = $slug;
