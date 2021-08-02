@@ -16,6 +16,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * Classe qui représente la table movie et ses enregistrements
  * 
  * @ORM\Entity(repositoryClass="App\Repository\MovieRepository")
+ * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity("title")
  */
 class Movie
@@ -73,7 +74,7 @@ class Movie
 
 	/**
 	 * @ORM\Column(type="datetime", nullable=true)
-	 *
+	 * 
 	 */
 	private $updatedAt;
 
@@ -155,7 +156,8 @@ class Movie
 
 	/**
 	 * Set the value of createdAt
-	 *
+	 * @ORM\PrePersist
+	 * 
 	 * @return  self
 	 */
 	public function setCreatedAt(DateTime $createdAt)
@@ -175,12 +177,14 @@ class Movie
 
 	/**
 	 * Set the value of updatedAt
-	 *
+	 * 
+	 * @ORM\PreUpdate
+	 * 
 	 * @return  self
 	 */
-	public function setUpdatedAt(DateTime $updatedAt)
+	public function setUpdatedAt()
 	{
-		$this->updatedAt = $updatedAt;
+		$this->updatedAt = new DateTime();
 
 		return $this;
 	}
