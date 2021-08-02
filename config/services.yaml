@@ -35,4 +35,16 @@ services:
     App\Service\SlugService:
         arguments:
             $toLower: '%app.slug_to_lower%'
+
+    App\EventListener\MovieTitleSlugger:
+        tags:
+            -
+                # these are the options required to define the entity listener
+                name: 'doctrine.orm.entity_listener'
+                event: 'prePersist'
+                entity: 'App\Entity\Movie'
             
+            -
+                name: 'doctrine.orm.entity_listener'
+                event: 'preUpdate'
+                entity: 'App\Entity\Movie'

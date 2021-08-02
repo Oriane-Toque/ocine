@@ -6,7 +6,6 @@ use App\Entity\Movie;
 use App\Repository\MovieRepository;
 use App\Form\Front\MovieType;
 use App\Service\MessageGenerator;
-use App\Service\SlugService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -51,7 +50,7 @@ class MovieController extends AbstractController
      *
      * @Route("/back/movie/add", name="back_movie_add", methods={"GET", "POST"})
      */
-    public function add(Request $request, SlugService $slugService): Response
+    public function add(Request $request): Response
     {
         $movie = new Movie();
 
@@ -61,7 +60,7 @@ class MovieController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-						$movie->setSlug($slugService->slugConvert($movie->getTitle()));
+            // $movie->setSlug($slugService->slugConvert($movie->getTitle()));
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($movie);
@@ -81,7 +80,7 @@ class MovieController extends AbstractController
      * 
      * @Route("/back/movie/edit/{slug}", name="back_movie_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Movie $movie, MessageGenerator $messageGenerator, SlugService $slugService): Response
+    public function edit(Request $request, Movie $movie, MessageGenerator $messageGenerator): Response
     {
         // 404 ?
         if ($movie === null) {
@@ -94,15 +93,15 @@ class MovieController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-						$movie->setSlug($slugService->slugConvert($movie->getTitle()));
+            // $movie->setSlug($slugService->slugConvert($movie->getTitle()));
 
-						// dd($movie);
+            // dd($movie);
 
             $em = $this->getDoctrine()->getManager();
             // Pas de persist() pour 
             $em->flush();
 
-						$this->addFlash('success', $messageGenerator->getRandomMessage());
+            $this->addFlash('success', $messageGenerator->getRandomMessage());
 
             return $this->redirectToRoute('back_movie_read', ['slug' => $movie->getSlug()]);
         }
@@ -121,14 +120,14 @@ class MovieController extends AbstractController
      */
     public function delete(Movie $movie = null, EntityManagerInterface $entityManager): Response
     {
-			// 404 ?
-			if($movie === null) {
-				throw $this->createNotFoundException("Ce film n'existe pas");
-			}
+        // 404 ?
+        if ($movie === null) {
+            throw $this->createNotFoundException("Ce film n'existe pas");
+        }
 
-			$entityManager->remove($movie);
-			$entityManager->flush();
+        $entityManager->remove($movie);
+        $entityManager->flush();
 
-			return $this->redirectToRoute("back_movie_browse");
+        return $this->redirectToRoute("back_movie_browse");
     }
 }
