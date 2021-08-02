@@ -156,7 +156,6 @@ class Movie
 
 	/**
 	 * Set the value of createdAt
-	 * @ORM\PrePersist
 	 * 
 	 * @return  self
 	 */
