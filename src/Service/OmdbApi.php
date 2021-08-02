@@ -16,11 +16,11 @@ class OmdbApi
         $this->client = $client;
     }
 
-    public function fetch(): array
+    public function fetch(string $title): array
     {
         $response = $this->client->request(
             'GET',
-            'https://www.omdbapi.com/?apiKey=83bfb8c6&t=rambo'
+            'https://www.omdbapi.com/?apiKey=83bfb8c6&t=' . $title,
         );
 
         // on convertit le tableau en JSON
@@ -28,5 +28,23 @@ class OmdbApi
         // $content = ['id' => 521583, 'name' => 'symfony-docs', ...]
 
         return $content;
+    }
+
+    /**
+     * Renvoie l'URL du poster
+     *
+     * @param string $title Titre du film
+     * @return null|string
+     */
+    public function fetchPoster(string $title)
+    {
+        $content = $this->fetch($title);
+
+        // Clé Poster existe ?
+        if (array_key_exists('Poster', $content)) {
+            return $content['Poster'];
+        }
+
+        return null;
     }
 }

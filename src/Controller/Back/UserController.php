@@ -4,6 +4,7 @@ namespace App\Controller\Back;
 
 use App\Entity\User;
 use App\Form\Back\UserType;
+use App\Form\Back\UserEditType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +24,7 @@ class UserController extends AbstractController
     {
         return $this->render('back/user/users.html.twig', [
             'users' => $userRepository->findAll(),
-						'title' => 'Users'
+            'title' => 'Users'
         ]);
     }
 
@@ -38,10 +39,10 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-						// on hash le mdp
-						$hashedPassword = $userPasswordHasher->hashPassword($user, $user->getPassword());
-						// on le remet dans $user->password
-						$user->setPassword($hashedPassword);
+            // on hash le mdp
+            $hashedPassword = $userPasswordHasher->hashPassword($user, $user->getPassword());
+            // on le remet dans $user->password
+            $user->setPassword($hashedPassword);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
@@ -53,7 +54,7 @@ class UserController extends AbstractController
         return $this->renderForm('back/user/add.html.twig', [
             'user' => $user,
             'form' => $form,
-						'title' => 'Add User',
+            'title' => 'Add User',
         ]);
     }
 
@@ -64,19 +65,32 @@ class UserController extends AbstractController
     {
         return $this->render('back/user/read.html.twig', [
             'user' => $user,
-						'title' => 'User n°'.$user->getId(),
+            'title' => 'User n°' . $user->getId(),
         ]);
     }
 
     /**
      * @Route("/edit/{id<\d+>}", name="edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, User $user): Response
+    public function edit(Request $request, User $user, UserPasswordHasherInterface $userPasswordHasher): Response
     {
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserEditType::class, $user);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // hashage du mdp que si on a renseigné le champs mot de passe
+            // Si le mot de passe du form n'est pas vide
+            // c'est qu'on veut le changer !
+            if ($form->get('password')->getData() != '') {
+                dump($form->get('password')->getData());
+                // C'est là qu'on encode le mot de passe du User (qui se trouve dans $user)
+                $hashedPassword = $userPasswordHasher->hashPassword($user, $form->get('password')->getData());
+                // On réassigne le mot passe encodé dans le User
+                $user->setPassword($hashedPassword);
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('back_user_browse', [], Response::HTTP_SEE_OTHER);
@@ -93,7 +107,7 @@ class UserController extends AbstractController
      */
     public function delete(Request $request, User $user): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($user);
             $entityManager->flush();

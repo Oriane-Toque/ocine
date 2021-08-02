@@ -8,11 +8,12 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
-class UserType extends AbstractType
+class UserEditType extends AbstractType
 {
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
@@ -45,14 +46,24 @@ class UserType extends AbstractType
 				[
 					'type' => PasswordType::class,
 					'invalid_message' => 'Les mots de passe ne correspondent pas',
+					// ce champs n'est plus lié à l'entité
 					'required' => true,
+					'mapped' => false,
 					'first_options'  => [
-						'constraints' => new NotBlank(),
+						'constraints' => [
+							new Regex('/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&-\/])[A-Za-z\d@$!%*#?&-\/]{8,}$/'),
+							new NotCompromisedPassword(),
+						],
+						'attr' => [
+							'placeholder' => 'Laissez vide si inchangé...',
+						],
 						'label' => 'Mot de passe',
 						'help' => 'Minimum eight characters, at least one letter, one number and one special character',
 					],
-					'second_options' => ['label' => 'Répéter le mot de passe'],
-				]
+					'second_options' => [
+						'label' => 'Répéter le mot de passe',
+					],
+				],
 			);;
 	}
 

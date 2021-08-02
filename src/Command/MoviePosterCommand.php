@@ -38,10 +38,11 @@ class MoviePosterCommand extends Command
     {
         $this
             // message d'aide supplémentaire
-            ->addArgument('title', InputArgument::OPTIONAL, 'Argument description')
-            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description');
+            ->addArgument('title', InputArgument::OPTIONAL, 'Movie title to fetch')
+            ->addOption('dump', 'd', InputOption::VALUE_NONE, 'Dump title movies');
     }
 
+    // objet input permet de récupérer l'entrée
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // permet de fioritures graphiques dans le terminal
@@ -61,8 +62,8 @@ class MoviePosterCommand extends Command
             $movies = $this->movieRepository->findAll();
         }
 
-        if ($input->getOption('option1')) {
-            // ...
+        if ($input->getOption('dump')) {
+            $io->info('Fetching ' . $title);
         }
 
         // la logique métier / l'objectif de la commande
@@ -71,12 +72,16 @@ class MoviePosterCommand extends Command
         // on boucle dessus et ensuite on va chercher les données associées sur OMDB API
         foreach ($movies as $movie) {
             // => conversion à faire JSON => Array
-            $movieData = $this->omdbApi->fetch();
+            $movieData = $this->omdbApi->fetchPoster($movie->getTitle());
+
+            if (!$movieData) {
+                $io->warning('Poster not found :scream: ' . $movie->getTitle());
+            }
             // On met à jour l'url du poster dans le film
-            dd($movieData);
+            $movie->setPoster($movieData);
         }
 
-        // On flush
+        $this->entityManager->flush();
 
         $io->success('All movie fetched ! Pass --help to see your options.');
 
