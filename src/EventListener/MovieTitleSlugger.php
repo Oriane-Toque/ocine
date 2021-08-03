@@ -3,8 +3,8 @@
 namespace App\EventListener;
 
 use App\Entity\Movie;
-use Doctrine\ORM\Event\LifecycleEventArgs;
 use App\Service\SlugService;
+use Doctrine\Persistence\Event\LifecycleEventArgs;
 
 class MovieTitleSlugger
 {
@@ -15,12 +15,7 @@ class MovieTitleSlugger
         $this->slugger = $slugService;
     }
 
-    public function prePersist(Movie $movie, LifecycleEventArgs $event)
-    {
-        $movie->setSlug($this->slugger->slugConvert($movie->getTitle()));
-    }
-
-    public function preUpdate(Movie $movie, LifecycleEventArgs $event)
+    public function slugify(Movie $movie, LifecycleEventArgs $event): void
     {
         $movie->setSlug($this->slugger->slugConvert($movie->getTitle()));
     }

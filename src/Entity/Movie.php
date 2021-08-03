@@ -116,6 +116,21 @@ class Movie
 		$this->teams = new ArrayCollection();
 	}
 
+
+	/**
+	 * Set auto the value of updatedAt
+	 * 
+	 * @ORM\PreUpdate
+	 * 
+	 * @return  self
+	 */
+	public function setUpdatedAtToNow()
+	{
+		$this->updatedAt = new DateTime();
+
+		return $this;
+	}
+
 	/**
 	 * Get titre
 	 */
@@ -176,14 +191,12 @@ class Movie
 
 	/**
 	 * Set the value of updatedAt
-	 * 
-	 * @ORM\PreUpdate
-	 * 
+	 *
 	 * @return  self
 	 */
-	public function setUpdatedAt()
+	public function setUpdatedAt($updatedAt)
 	{
-		$this->updatedAt = new DateTime();
+		$this->updatedAt = $updatedAt;
 
 		return $this;
 	}
