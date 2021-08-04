@@ -1,4 +1,4 @@
-{% extends 'back/base_back.html.twig' %}
+{% extends "back/base_back.html.twig" %}
 
 {% block title %}Admin liste des films{% endblock %}
 
@@ -7,12 +7,12 @@
 <div class="my-5 d-flex justify-content-between align-items-center">
     <h2>Movie List</h2>
 
-		{% include "_flash_messages.html.twig" %}
+    {{ include('_flash_messages.html.twig') }}
 
-		{% if is_granted('ROLE_MANAGER') %}
-			<a href="{{ path('back_movie_add') }}" class="btn btn-success" role="button">Add New Movie</a>
-		{% endif %}
-    
+    {% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('back_movie_add') }}" class="btn btn-success" role="button">Add New Movie</a>
+    {% endif %}
+
 </div>
 
 <table class="table table-hover">
@@ -23,24 +23,25 @@
             <th>Title</th>
             <th>Duration</th>
             <th>Release Date</th>
-            <th>Actions</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         {% for movie in movies %}
         <tr>
             <td>{{ movie.id }}</td>
-            <td><img src="{{ movie.poster }}" alt="{{ movie.title }}" width="100" height="130" class="img-fluid" /></td>
+            <td><img src="{{ movie.poster ?? asset('default-movie.jpg') }}" alt="{{ movie.title }}" width="100" height="130" class="img-fluid" /></td>
             <td>{{ movie.title }}</td>
             <td>{{ movie.duration }} min.</td>
             <td>{{ movie.releaseDate | date('m-Y') }}</td>
             <td>
-                <a href="{{ path('back_movie_read', {"slug": movie.slug}) }}"><i class="far fa-eye text-info fa-2x"></i></a>
-								{% if is_granted('ROLE_ADMIN') %}
-									<a href="{{ path('back_movie_edit', {"slug": movie.slug}) }}"><i class="far fa-edit text-warning fa-2x"></i></i></a>
-									<a href="{{ path('back_movie_delete', {"slug": movie.slug}) }}"><i
-													class="far fa-trash-alt text-danger fa-2x"></i></a>
-								{% endif %}
+                <a href="{{ path('back_movie_read', {id: movie.id}) }}"><i class="far fa-eye text-info fa-2x"></i></a>
+
+                {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('back_movie_edit', {id: movie.id}) }}"><i class="far fa-edit text-warning fa-2x"></i></i></a>
+                <a href="{{ path('back_movie_delete', {id: movie.id}) }}"><i
+                        class="far fa-trash-alt text-danger fa-2x"></i></a>
+                {% endif %}
                 
             </td>
         </tr>

@@ -4,16 +4,20 @@ namespace App\Service;
 
 use Psr\Log\LoggerInterface;
 
-class MessageGenerator {
-
+class MessageGenerator
+{
 	private $logger;
 
+	// Les message doit-il être random ?
 	private $isRandom;
 
+	// Injection de service Symfo dans notre service
 	public function __construct(LoggerInterface $logger, bool $isRandom)
 	{
+		// on va pouvoir logger des choses \o/ trop cool x)
 		$this->logger = $logger;
 
+		// Message aléatoire ou pas ?
 		$this->isRandom = $isRandom;
 	}
 
@@ -23,21 +27,19 @@ class MessageGenerator {
 		'Great work! Keep going!',
 	];
 
-	/**
-	 * Get random message
-	 */ 
 	public function getRandomMessage()
 	{
-		if($this->isRandom) {
+		if ($this->isRandom) {
 			$message = $this->messages[array_rand($this->messages)];
 		} else {
-			$message = 'Action effectuée avec succès !';
+			$message = 'Action effectuée avec succès \o/';
 		}
 
-			$this->logger->info('Random message', [
-					'message' => $message,
-			]);
+		// ça sert à rien mais c'est pour l'exemple =)
+		$this->logger->info('Random message', [
+			'message' => $message,
+		]);
 
-			return $message;
+		return $message;
 	}
 }

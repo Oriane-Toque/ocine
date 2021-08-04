@@ -9,6 +9,7 @@ use App\Entity\Movie;
 use App\Entity\Review;
 use App\Form\Front\ReviewType;
 use App\Repository\CastingRepository;
+use App\Repository\GenreRepository;
 use App\Repository\MovieRepository;
 use DateTime;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +22,7 @@ class MainController extends AbstractController
 	 *
 	 * @Route("/", name="movie_list")
 	 */
-	public function list(MovieRepository $movieRepository)
+	public function list(MovieRepository $movieRepository, GenreRepository $genreRepository)
 	{
 
 		$movies = $movieRepository->findAllByTitle(
@@ -31,13 +32,22 @@ class MainController extends AbstractController
 			]
 		);
 
-		dump($movies);
+		// Tous les genres
+		$genres = $genreRepository->findBy([], ['name' => 'ASC']);
+
+		// dump($movies);
+
+
+		// Accès aux paramètres de services depuis un contrôleur
+		// @link https://symfony.com/doc/current/configuration.html#accessing-configuration-parameters
+		dump($this->getParameter('kernel.project_dir'));
+		dump($this->getParameter('app.message_generator_is_random'));
 
 		return $this->render(
 			"front/home/movies.html.twig",
 			[
-				"title" => "Liste des films",
 				"movies" => $movies,
+				"genres" => $genres,
 			]
 		);
 	}
@@ -61,9 +71,7 @@ class MainController extends AbstractController
 		return $this->render(
 			"front/movie/movie.html.twig",
 			[
-				"title" => $movie->getTitle(),
 				"movie" => $movie,
-				"castings" => $castings,
 			]
 		);
 	}
@@ -71,10 +79,11 @@ class MainController extends AbstractController
 	/**
 	 * @Route("/movie/{slug}/review/add", name="add_review")
 	 */
-	public function addReview(Movie $movie, Request $request) {
+	public function addReview(Movie $movie, Request $request)
+	{
 
 		// Film non trouvé
-		if($movie === null) {
+		if ($movie === null) {
 			throw $this->createNotFoundException("Film non trouvé");
 		}
 
@@ -84,26 +93,27 @@ class MainController extends AbstractController
 		// création d'un nouveau formulaire
 		$form = $this->createForm(ReviewType::class, $review);
 
-				// on effectue le traitement du formulaire
-				$form->handleRequest($request);
+		// on effectue le traitement du formulaire
+		$form->handleRequest($request);
 
-				// dd($review);
-		
-				// on vérifie que le formulaire a été soumis et s'il est valide
-				if ($form->isSubmitted() && $form->isValid()) {
+		// dd($review);
 
-					// Relation review <> movie
-					$review->setMovie($movie);
-		
-					$reviewManager = $this->getDoctrine()->getManager();
-					$reviewManager->persist($review);
-					$reviewManager->flush();
-		
-					return $this->redirectToRoute("movie_read", ["slug" => $movie->getSlug()]);
-				}
+		// on vérifie que le formulaire a été soumis et s'il est valide
+		if ($form->isSubmitted() && $form->isValid()) {
+
+			// Relation review <> movie
+			$review->setMovie($movie);
+
+			$reviewManager = $this->getDoctrine()->getManager();
+			$reviewManager->persist($review);
+			$reviewManager->flush();
+
+			return $this->redirectToRoute("movie_read", ["slug" => $movie->getSlug()]);
+		}
 
 		// Affiche le formulaire
-		return $this->render("front/movie/movie_add_review.html.twig",
+		return $this->render(
+			"front/movie/movie_add_review.html.twig",
 			[
 				"title" => "Ajout critique",
 				"form" => $form->createView(),
