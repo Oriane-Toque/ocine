@@ -1,21 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-	{{ title }} - O'Ciné
-{% endblock %}
-
-{% block menuMovie %}active{% endblock %}
+{% block breadcrumb %}Accueil > Tous les films{% endblock %}
 
 {% block body %}
-	<ul class="list-group">
-		{% for movie in movies %}
-			<li class="list-group-item d-flex justify-content-between align-items-center mb-3">
-				<div class="ms-2 me-auto">
-					<div class="fw-bold">#{{ loop.index }} - {{ movie.title }}</div>
-					Durée : {{ movie.duration }} mins
-				</div>
-				<a href="{{ path("movie_read", {"slug": movie.slug}) }}" class="btn btn-primary">Détails</a>
-			</li>
-		{% endfor %}
-	</ul>
+
+<h1>Tous les films</h1>
+
+<h2 id="header-margin">Retrouvez les films recensés sur Allociné, à voir ou à revoir, seul, en famille ou entre amis.</h2>
+
+<div class="row">
+
+    {# Liste des genres #}
+    <div class="col-2" id="genres">
+        <h3>Par genres</h3>
+        {% for genre in genres %}
+            <div>{{ genre.name }}</div>
+        {% endfor %}
+    </div>
+
+    {# Liste des films #}
+    <div class="col-10">
+
+        {% if app.request.query.get('search') is not null %}
+            <h3>Résultats de la recherche pour <i>"{{ app.request.query.get('search') }}"</i></h3>
+        {% endif %}
+
+        {% for movie in movies %}
+        {% include 'front/movie/_movie_main.html.twig' with { 'displaySummary': true } %}
+        {% else %}
+        <p>Aucun film trouvé.</p>
+        {% endfor %}
+    </div>
+</div>
+
 {% endblock %}

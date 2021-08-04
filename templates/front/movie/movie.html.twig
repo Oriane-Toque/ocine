@@ -1,53 +1,51 @@
-{% extends "base.html.twig" %}
+{% extends 'base.html.twig' %}
 
-{% block title %}
-	{{ title }} - O'Ciné
-{% endblock %}
+{% block title %}{{ movie.title }}{% endblock %}
 
-{% block menuMovie %}active{% endblock %}
+{% block bodyid %}id="show"{% endblock %}
+
+{% block breadcrumb %}<a href="{{ path('movie_list') }}">Accueil</a> > {{ movie.title }}{% endblock %}
 
 {% block body %}
-	<div class="card container">
-		<div class="card-header d-flex justify-content-between align-items-center">
-			<h2>{{ movie.title }}</h2>
-			<div>
-				{% for genre in movie.genres %}
-					<a href="#" class="btn btn-primary">{{ genre.name }}</a>
-				{% endfor %}
-			</div>
-		</div>
-		<div class="card-body">
-			<p class="card-text"><u>Durée</u> : {{ movie.duration }} mins</p>
-			<p class="card-text"><u>Réalisé le</u> : <time>{{ movie.releaseDate|date("d-m-Y") }}</time></p>
-			<p><u>Casting</u> : </p>
-			<ul>
-				{% for casting in castings %}
-					<li>({{ casting.creditOrder }}) {{ casting.person }} : {{ casting.role }}</li>
-				{% else %}
-					<li>Non informé</li>
-				{% endfor %}
-			</ul>
-			<a href="{{ path("movie_list") }}" class="btn btn-primary">Back Home</a>
-		</div>
-		<h2>Les critiques</h2>
-		<p><a href="{{ path("add_review", {"slug": movie.slug}) }}" class="btn btn-primary">Ajouter une critique au film</a></p>
-			{% for review in movie.reviews %}
-				<div class="card mb-2">
-						<div class="card-body">
-								<h5 class="card-title">{{ review.username }}</h5>
-								<h6 class="card-subtitle mb-2 text-muted">Note :
-										{{ review.rating }}
-										sur 5</h6>
-								<h6 class="card-subtitle mb-2 text-muted">Vu le :
-										{{ (review.watchedAt|date('d/m/Y')) }}</h6>
-								<p class="card-text">{{ review.content }}</p>
-								<div class="my-2">
-										{% for reaction in review.reactions %}
-										<span class="badge bg-{{ reaction }}">{{ reaction }}</span>
-										{% endfor %}
-								</div>
-						</div>
-				</div>
-			{% endfor %}
-	</div>
+
+<div id="show">
+
+    <h1 id="header-margin">{{ movie.title }}</h1>
+
+    {% include 'front/movie/_movie_main.html.twig' %}
+
+    <h2>Synopsis et détails</h2>
+    <p><i>Ici le synopsis du film</i></p>
+    <p class="infos"><label>Année de production</label>{{ movie.releaseDate|date('Y') }}</p>
+
+    <h2 id="casting">Acteurs et actrices</h2>
+
+    <div class="row casting">
+    {% for casting in movie.castings %}
+        <div class="col-3">
+            <div class="actor">{{ casting.person.firstname }} {{ casting.person.lastname }}</div>
+            <div class="role">Rôle : {{ casting.role }}</div>
+        </div>
+    {% endfor %}
+    </div>
+
+    <hr>
+
+    <p><a href="#">Casting complet et équipe technique</a></p>
+
+    <hr>
+
+    <h2>Critiques</h2>
+
+    <p><a href="{{ path('add_review', {'slug': movie.slug}) }}" class="btn btn-primary">Ajouter une critique</a></p>
+
+    {% for review in movie.reviews %}
+    <div>
+        <p>Note {# review.rating #}?/5, le {{ review.watchedAt|date('d-m-Y H:i') }} : <i>{{ review.content }}</i></p>
+    </div>
+    {% endfor %}
+
+    <hr>
+
+</div>
 {% endblock %}
