@@ -86,7 +86,10 @@ class Movie
 
 	/**
 	 * @ORM\ManyToMany(targetEntity=Genre::class, inversedBy="movies")
+	 * 
 	 * @Groups("movies_get")
+	 * 
+	 * @Assert\Count(min=1)
 	 */
 	private $genres;
 
@@ -103,6 +106,10 @@ class Movie
 
 	/**
 	 * @ORM\Column(type="smallint", nullable=true)
+	 * 
+	 * @Assert\NotBlank
+	 * @Assert\Type("integer") 
+	 * @Assert\Range(min=1, max=5) 
 	 */
 	private $rating;
 

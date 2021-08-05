@@ -41,7 +41,7 @@
             <li class="">
                 <strong>Casting :</strong>
                 <ul>
-                    {% for casting in castings %}
+                    {% for casting in movie.castings %}
                     <li>
                         <span class="text-decoration-underline">{{ casting.role }}</span> : <a
                             href="{# path('app_actor_show', {'id': casting.person.id}) #}">{{ casting.person.firstname }}

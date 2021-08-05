@@ -31,6 +31,7 @@ class RandomMovieSubscriber implements EventSubscriberInterface
         // dump('Subscriber Movie');
         // dump($event);
 
+        if (preg_match('/^\/api/', $event->getRequest()->getPathInfo())) return;
         // Récupérer le controleur
         $controller = $event->getController();
 

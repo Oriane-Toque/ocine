@@ -53,6 +53,7 @@ security:
         - { path: ^/back/[a-z]+/(browse|read), roles: ROLE_MANAGER }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+        - { path: }
     
     role_hierarchy:
         # Role Admin hérite de role manager
