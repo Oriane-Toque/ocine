@@ -23,8 +23,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * 
-     * @Assert\NotBlank
-     * @Assert\Email(message="Cette adresse {{value}} n'est pas une adresse mail valide")
+     * @Assert\NotBlank(message="Veuillez saisir une valeur")
+     * @Assert\Email(message="Cette adresse {{ value }} n'est pas une adresse mail valide")
      */
     private $email;
 
@@ -39,6 +39,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      * @ORM\Column(type="string")
      * 
+     * @Assert\NotBlank(message="Veuillez saisir une valeur")
+     * @Assert\Regex(pattern="/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&-\/])[A-Za-z\d@$!%*#?&-\/]{8,}$/", message="Mot de passe invalide")
      */
     private $password;
 

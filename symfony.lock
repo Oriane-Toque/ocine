@@ -552,7 +552,7 @@
         "version": "v5.3.3"
     },
     "symfony/test-pack": {
-        "version": "v1.0.8"
+        "version": "v1.0.9"
     },
     "symfony/translation": {
         "version": "5.3",
