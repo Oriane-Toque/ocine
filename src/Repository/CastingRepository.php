@@ -56,7 +56,7 @@ class CastingRepository extends ServiceEntityRepository
 		public function findAllByMovieOrderCreditQb(Movie $movie): array
     {
         return $this->createQueryBuilder('c')
-						->innerJoin('c.person', 'p')
+			->innerJoin('c.person', 'p')
             ->andWhere('c.movie = :movie')
             ->setParameter('movie', $movie)
             ->orderBy('c.creditOrder', 'ASC')

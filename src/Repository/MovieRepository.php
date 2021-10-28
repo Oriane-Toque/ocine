@@ -30,15 +30,13 @@ class MovieRepository extends ServiceEntityRepository
 		 * @return Movie[]
 		 */
 		public function findByTitleAsc(): array
-    {
-				// on crée un objet de type Query Builder, sur l'entité Movie
-				// 'm' = alias pour l'entité Movie
-        return $this->createQueryBuilder('m')
-            ->orderBy('m.title', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
-    }
+        {
+            return $this->createQueryBuilder('m')
+                ->orderBy('m.title', 'ASC')
+                ->getQuery()
+                ->getResult()
+            ;
+        }
 
 		/**
 		 * Récupère tous les films dans l'ordre alphabétique
@@ -46,18 +44,18 @@ class MovieRepository extends ServiceEntityRepository
 		 *
 		 * @return Movie[]
 		 */
-    public function findAllByTitle(): array
-    {
-        $entityManager = $this->getEntityManager();
+        public function findAllByTitle(): array
+        {
+            $entityManager = $this->getEntityManager();
 
-        $query = $entityManager->createQuery(
-            'SELECT m
-            FROM App\Entity\Movie m
-            ORDER BY m.title ASC'
-        );
+            $query = $entityManager->createQuery(
+                'SELECT m
+                FROM App\Entity\Movie m
+                ORDER BY m.title ASC'
+            );
 
-        return $query->getResult();
-    }
+            return $query->getResult();
+        }
 
     /*
     public function findByExampleField($value)
