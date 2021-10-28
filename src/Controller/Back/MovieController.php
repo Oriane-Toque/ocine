@@ -18,6 +18,9 @@ class MovieController extends AbstractController
      * Lister les films
      *
      * @Route("/back/movie/browse", name="back_movie_browse", methods={"GET"})
+     *
+     * @param MovieRepository $movieRepository
+     * @return Response
      */
     public function browse(MovieRepository $movieRepository): Response
     {
@@ -32,6 +35,9 @@ class MovieController extends AbstractController
      * Afficher un film
      *
      * @Route("/back/movie/read/{slug}", name="back_movie_read", methods={"GET"})
+     *
+     * @param Movie|null $movie
+     * @return Response
      */
     public function read(Movie $movie = null): Response
     {
@@ -49,6 +55,9 @@ class MovieController extends AbstractController
      * Ajouter un film
      *
      * @Route("/back/movie/add", name="back_movie_add", methods={"GET", "POST"})
+     *
+     * @param Request $request
+     * @return Response
      */
     public function add(Request $request): Response
     {
@@ -79,6 +88,11 @@ class MovieController extends AbstractController
      * Editer un film
      * 
      * @Route("/back/movie/edit/{slug}", name="back_movie_edit", methods={"GET","POST"})
+     *
+     * @param Request $request
+     * @param Movie $movie
+     * @param MessageGenerator $messageGenerator
+     * @return Response
      */
     public function edit(Request $request, Movie $movie, MessageGenerator $messageGenerator): Response
     {
@@ -117,6 +131,10 @@ class MovieController extends AbstractController
      * => en GET à convertir en POST ou mieux en DELETE
      * 
      * @Route("/back/movie/delete/{slug}", name="back_movie_delete", methods={"GET"})
+     *
+     * @param Movie|null $movie
+     * @param EntityManagerInterface $entityManager
+     * @return Response
      */
     public function delete(Movie $movie = null, EntityManagerInterface $entityManager): Response
     {
