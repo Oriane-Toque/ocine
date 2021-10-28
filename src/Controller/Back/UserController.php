@@ -29,6 +29,10 @@ class UserController extends AbstractController
 
     /**
      * @Route("/add", name="add", methods={"GET","POST"})
+     *
+     * @param Request $request
+     * @param UserPasswordHasherInterface $userPasswordHasher
+     * @return Response
      */
     public function add(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
     {
@@ -52,7 +56,7 @@ class UserController extends AbstractController
 
         return $this->renderForm('back/user/add.html.twig', [
             'user' => $user,
-            'form' => $form,
+            'form' => $form->createView(),
             'title' => 'Add User',
         ]);
     }
