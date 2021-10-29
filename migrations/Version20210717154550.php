@@ -28,4 +28,9 @@ final class Version20210717154550 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE casting CHANGE role role INT NOT NULL');
     }
+
+    public function isTransactional(): bool
+    {
+        return false;
+    }
 }

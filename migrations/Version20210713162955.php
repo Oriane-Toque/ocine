@@ -28,4 +28,9 @@ final class Version20210713162955 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE movie CHANGE updated_at updated_at DATETIME NOT NULL');
     }
+
+    public function isTransactional(): bool
+    {
+        return false;
+    }
 }

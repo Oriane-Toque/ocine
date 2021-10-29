@@ -28,4 +28,9 @@ final class Version20210720191327 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('DROP INDEX IDX_1D5EF26F2B36786B ON movie');
     }
+
+    public function isTransactional(): bool
+    {
+        return false;
+    }
 }

@@ -40,4 +40,9 @@ final class Version20210717153653 extends AbstractMigration
         $this->addSql('DROP TABLE movie_genre');
         $this->addSql('DROP TABLE person');
     }
+
+    public function isTransactional(): bool
+    {
+        return false;
+    }
 }

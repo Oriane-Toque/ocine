@@ -48,4 +48,9 @@ final class Version20210729120820 extends AbstractMigration
         $this->addSql('DROP INDEX IDX_794381C68F93B6FC ON review');
         $this->addSql('ALTER TABLE review DROP movie_id');
     }
+
+    public function isTransactional(): bool
+    {
+        return false;
+    }
 }

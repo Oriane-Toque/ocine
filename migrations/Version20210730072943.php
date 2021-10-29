@@ -30,4 +30,9 @@ final class Version20210730072943 extends AbstractMigration
         $this->addSql('DROP INDEX UNIQ_1D5EF26F2B36786B ON movie');
         $this->addSql('DROP INDEX UNIQ_1D5EF26F989D9B62 ON movie');
     }
+
+    public function isTransactional(): bool
+    {
+        return false;
+    }
 }
