@@ -30,4 +30,9 @@ final class Version20210722072337 extends AbstractMigration
         $this->addSql('DROP TABLE review');
         $this->addSql('CREATE FULLTEXT INDEX IDX_1D5EF26F2B36786B ON movie (title)');
     }
+
+    public function isTransactional(): bool
+    {
+        return false;
+    }
 }
