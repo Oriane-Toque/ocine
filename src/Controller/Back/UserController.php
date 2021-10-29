@@ -87,7 +87,7 @@ class UserController extends AbstractController
             // Si le mot de passe du form n'est pas vide
             // c'est qu'on veut le changer !
             if ($form->get('password')->getData() != '') {
-                dump($form->get('password')->getData());
+                //dump($form->get('password')->getData());
                 // C'est là qu'on encode le mot de passe du User (qui se trouve dans $user)
                 $hashedPassword = $userPasswordHasher->hashPassword($user, $form->get('password')->getData());
                 // On réassigne le mot passe encodé dans le User

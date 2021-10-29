@@ -35,13 +35,11 @@ class MainController extends AbstractController
 		// Tous les genres
 		$genres = $genreRepository->findBy([], ['name' => 'ASC']);
 
-		// dump($movies);
-
 
 		// Accès aux paramètres de services depuis un contrôleur
 		// @link https://symfony.com/doc/current/configuration.html#accessing-configuration-parameters
-		dump($this->getParameter('kernel.project_dir'));
-		dump($this->getParameter('app.message_generator_is_random'));
+		//dump($this->getParameter('kernel.project_dir'));
+		//dump($this->getParameter('app.message_generator_is_random'));
 
 		return $this->render(
 			"front/home/movies.html.twig",
@@ -65,8 +63,8 @@ class MainController extends AbstractController
 
 		$castings = $castingRepository->findAllByMovieOrderCreditQb($movie);
 
-		dump($movie);
-		dump($castings);
+		//dump($movie);
+		//dump($castings);
 
 		return $this->render(
 			"front/movie/movie.html.twig",
