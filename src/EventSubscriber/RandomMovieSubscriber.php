@@ -63,7 +63,7 @@ class RandomMovieSubscriber implements EventSubscriberInterface
             // 3. On le transmet à Twig
             $this->twig->addGlobal('randomMovie', $randomMovie);
 
-            dump('subscriber appelé !');
+            //dump('subscriber appelé !');
         }
 
         // Notre écouteur ne s'éxecute pas partout
