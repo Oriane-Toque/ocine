@@ -41,7 +41,7 @@
 
     {% for review in movie.reviews %}
     <div>
-        <p>Note {# review.rating #}?/5, le {{ review.watchedAt|date('d-m-Y H:i') }} : <i>{{ review.content }}</i></p>
+        <p>Note {{ review.rating }}/5, le {{ review.watchedAt|date('d-m-Y H:i') }} : <i>{{ review.content }}</i></p>
     </div>
     {% endfor %}
 
