@@ -33,7 +33,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * 
      * @Assert\Count(min=1, max=1)
      */
-    private $roles = [];
+    private $roles = ["ROLE_USER"];
 
     /**
      * @var string The hashed password

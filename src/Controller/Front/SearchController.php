@@ -15,7 +15,7 @@ class SearchController extends AbstractController {
 
 		$movies = $movieRepository->searchMovieByTitleAsc($title, 'jolie');
 
-		dd($movies);
+		// dd($movies);
 
 	}
 }

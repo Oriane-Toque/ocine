@@ -1,0 +1,11 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block body %}
+    <h1>Inscris toi : ainsi tu pourras poster tes critiques sur les films</h1>
+
+    {% include "front/security/_form_subscribe.html.twig" %}
+
+    <a href="{{ path('movie_list') }}">back to home</a>
+{% endblock %}
