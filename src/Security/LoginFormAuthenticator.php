@@ -51,7 +51,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         // For example:
-        return new RedirectResponse($this->urlGenerator->generate('back_movie_browse'));
+        return new RedirectResponse($this->urlGenerator->generate('movie_list'));
         // throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
